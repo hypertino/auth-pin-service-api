@@ -1,0 +1,43 @@
+# Copyright (c) 2017 Magomed Abdurakhmanov, Hypertino
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+#%RAML 1.0 Extension
+title: Pin Authorization API
+baseUri: hb://auth-pin
+extends: auth-service-api/auth.raml
+
+types:
+  CreatePin:
+    type: object
+    properties:
+      contact: string
+      time_to_live_seconds?: integer
+      pin_length: integer
+      only_digits: integer
+      extra: object
+
+  Pin:
+    type: object
+    properties:
+      contact: string
+      pin: string
+      extra: object
+      attempts: integer
+      consumed: boolean
+      invalid: boolean
+      valid_until: # unix date-time in millis
+        type: number
+        format: int64
+
+/pins:
+  description: |
+    Pins to authenticate and authorize requests.
+  post:
+    description: |
+      Create pin to use for the rest authorized requests.
+    body:
+      application/json: CreatePin
+    responses:
+      201:
