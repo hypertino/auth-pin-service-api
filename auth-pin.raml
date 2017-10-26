@@ -13,6 +13,7 @@ types:
   CreatePin:
     type: object
     properties:
+      pin_id: string
       time_to_live_seconds?: integer
       pin_length?: integer
       only_digits?: boolean
@@ -34,6 +35,7 @@ types:
   NewPin:
     type: object
     properties:
+      pin: string
       pin_id: string
 
 /pins:
